@@ -6,8 +6,8 @@ public class Vehiculo
     // private string _Dominio, _Marca;
 
     public int ID {get;set;} = -1;
-    public string Dominio {get;set;}
-    public string Marca {get;set;}
+    public string Dominio {get;set;} = "";
+    public string Marca {get;set;} = "";
     public int AnioFabricacion {get;set;}
     public int IDTitular {get;set;}
 

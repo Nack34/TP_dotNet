@@ -33,7 +33,7 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         while (!sr.EndOfStream)
         {
             Poliza poliza = LeerPoliza(in sr); // ------------------------------------------------------------ FUNCIONA???
-            if (poliza.ID == ID) polizas.Add(poliza);
+            if (poliza.ID != ID) polizas.Add(poliza);
             else seEncontro=true;
         }
         File.Delete(_nombreArch); // borrar archivo
@@ -41,7 +41,7 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
             AgregarPoliza(poliza);
         }
 
-        if (!seEncontro) throw new Exception("No se encontro el archivo");
+        if (!seEncontro) throw new Exception("No se encontro la poliza");
     }
     
     public void ModificarPoliza(Poliza polizaModificada){
@@ -51,7 +51,7 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         while (!sr.EndOfStream)
         {
             Poliza poliza = LeerPoliza(in sr); // ------------------------------------------------------------ FUNCIONA???
-            if (poliza.ID == polizaModificada.ID) polizas.Add(poliza);
+            if (poliza.ID != polizaModificada.ID) polizas.Add(poliza);
             else {
                 seEncontro=true;
                 polizas.Add(polizaModificada);
@@ -62,7 +62,7 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
             AgregarPoliza(poliza);
         }
 
-        if (!seEncontro) throw new Exception("No se encontro el archivo");
+        if (!seEncontro) throw new Exception("No se encontro la poliza");
     }
 
     public Poliza LeerPoliza(in StreamReader sr){ // ---------------------------------------- Como desacoplarlo? Seria mejor desacoplado?

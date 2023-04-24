@@ -5,8 +5,8 @@ public class Poliza
     public int ID {get; set;} = -1; // ------------------------------------------------------------ solo get? (solo de lectura?) Como modificarlo? (Listar modifica el ID)
     public int VehiculoId {get;set;}
     public double ValorAsegurado {get;set;}
-    public String? Franquicia {get;set;}
-    public String? TipDeCobertura {get;set;}
+    public string Franquicia {get;set;} = "";
+    public string TipDeCobertura {get;set;}="";
     public DateTime FechaDeInicioDeVigencia {get;set;}
     public DateTime FechaDeFinDeVigencia {get;set;}
 
