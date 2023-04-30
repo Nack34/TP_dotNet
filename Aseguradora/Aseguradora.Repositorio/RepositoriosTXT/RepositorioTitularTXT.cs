@@ -4,7 +4,23 @@ using Aseguradora.Aplicacion;
 public class RepositorioTitularTXT : IRepositorioTitular{
     private readonly string _nombreArch = "titulares.txt";
 
-    public void AgregarTitular(Titular titular){
+    public RepositorioTitularTXT()
+    {
+     CrearArchivoIDTitular();   
+    }
+    public void AgregarTitular(Titular titular){ //agregarTitular es PersistirTitular
+
+        // setear ID con los metodos mas abajo
+        titular.ID=getNuevoID; //ale:lee la base de datos (txt), y asigna id
+
+
+        //ale: falta recorrer el txt para ver si no existe otro titular con el mismo dni
+        using var leer= new StreamReader(_nombreArch);
+        while(!leer.EndOfStream)
+        {
+            //completar body
+        }
+
         using var sw = new StreamWriter(_nombreArch,true);
         sw.WriteLine(titular.ID);
         sw.WriteLine(titular.DNI);
@@ -36,7 +52,7 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         if(!existe) throw new Exception("No existe un titular con este DNI");
     }
 
-    Titular LeerTitular(StreamReader sr){
+    Titular LeerTitular(StreamReader sr){ 
         var titular = new Titular();
         titular.ID = int.Parse(sr.ReadLine() ?? "");
         titular.DNI = int.Parse(sr.ReadLine() ?? "");
@@ -77,4 +93,40 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         }
         return listaTitulares;
     }
+
+
+////////////////////////////ASIGNAR ID A LA HORA DE INSTANCIAR/////////////////////////////////////////////////////////    
+    private static string RutaArchivoID {get;set;} = "Aseguradora.Repositorio/ArchivosTXT/IDTitular";
+    
+    
+    private static int getNuevoID //este te devuelve el id del titular siguiente
+    {
+        get
+        {
+            return RetornarIDTitular();
+            
+        }
+    }
+    private static void CrearArchivoIDTitular() //se ejecuta cuando creamos el txt por primera vez
+    {
+        StreamWriter archivo = new StreamWriter(RutaArchivoID);
+        archivo.WriteLine(1);//inicializa el id con 1;
+        archivo.Close();
+    }
+    
+    private static int RetornarIDTitular()
+    {
+        using var leer = new StreamReader(RutaArchivoID);
+        int IDtitular= int.Parse(leer.ReadLine() ?? "");; //tengo id actual
+        using var archivo = new StreamWriter(RutaArchivoID,false); 
+        IDtitular++;
+        archivo.WriteLine((IDtitular));//sobreescribo el id con id+1 en el archivo
+        return IDtitular-1;
+    }
+
+
+
+
+
+
 }

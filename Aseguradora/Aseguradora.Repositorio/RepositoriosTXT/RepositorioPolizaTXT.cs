@@ -5,6 +5,13 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
     readonly string _nombreArch = "polizas.txt";
     public void AgregarPoliza(Poliza poliza)
     {
+        // setear ID con los metodos mas abajo
+        poliza.ID=getNuevoID; //ale:lee la base de datos (txt), y asigna id
+
+
+
+        //ale: falta recorrer el txt para ver si no existe otro titular con el mismo dni
+
         using var sw = new StreamWriter(_nombreArch, true);
         sw.WriteLine(poliza.ID);
         sw.WriteLine(poliza.VehiculoId);
@@ -76,4 +83,55 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         poliza.FechaDeFinDeVigencia = DateTime.Parse(sr.ReadLine() ?? "");
         return poliza;
     }
+
+
+
+
+
+
+
+////////////////////////////ASIGNAR ID A LA HORA DE INSTANCIAR/////////////////////////////////////////////////////////    
+    private static string RutaArchivoID {get;set;} = "Aseguradora.Repositorio/ArchivosTXT/IDPoliza";
+    
+    
+    private static int getNuevoID //este te devuelve el id del Poliza siguiente
+    {
+        get
+        {
+            return RetornarIDPoliza();
+            
+        }
+    }
+    private static void CrearArchivoIDPoliza() //se ejecuta cuando creamos el txt por primera vez
+    {
+        StreamWriter archivo = new StreamWriter(RutaArchivoID);
+        archivo.WriteLine(1);//inicializa el id con 1;
+        archivo.Close();
+    }
+    
+    private static int RetornarIDPoliza()
+    {
+        using var leer = new StreamReader(RutaArchivoID);
+        int IDPoliza= int.Parse(leer.ReadLine() ?? "");; //tengo id actual
+        using var archivo = new StreamWriter(RutaArchivoID,false); 
+        IDPoliza++;
+        archivo.WriteLine((IDPoliza));//sobreescribo el id con id+1 en el archivo
+        return IDPoliza-1;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
