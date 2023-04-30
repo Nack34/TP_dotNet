@@ -5,15 +5,15 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
     readonly string _nombreArch = "Vehiculos.txt";
 
     private static int ID = 1000;
-    public void AgregarVehiculo(Vehiculo Vehiculo)
+    public void AgregarVehiculo(Vehiculo vehiculo)
     {
         using var sw = new StreamWriter(_nombreArch, true);
-        Vehiculo.ID = ID;
-        sw.WriteLine($"{ID++}#{Vehiculo.Dominio}#{Vehiculo.Marca}#{Vehiculo.AnioFabricacion}#{Vehiculo.IDTitular}");
+        vehiculo.ID = ID;
+        sw.WriteLine($"{ID++}#{vehiculo.Dominio}#{vehiculo.Marca}#{vehiculo.AnioFabricacion}#{vehiculo.IDTitular}");
     }
 
 
-    public void ModificarVehiculo(Vehiculo Vehiculo)
+    public void ModificarVehiculo(Vehiculo vehiculo)
     {
         bool encontre = false;
         string[] lineas = File.ReadAllLines(_nombreArch);
@@ -24,26 +24,13 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
             {
                 lineaAModificar++;
                 var vehiculoLeido = LeerVehiculo(sr);
-                if (Vehiculo.ID == vehiculoLeido.ID) encontre = true;
+                if (vehiculo.ID == vehiculoLeido.ID) encontre = true;
             }
         }
 
         if(!encontre) throw new Exception("no esta ese vehiculo");
 
-        string campo;
-        string lineaNueva = $"{Vehiculo.ID}#";
-        Console.WriteLine("escribi el dominio del nuevo vehiculo");
-        campo = Console.ReadLine() ?? "";
-        lineaNueva+=$"{campo}#";
-        Console.WriteLine("escribi la marca del nuevo vehiculo");
-        campo = Console.ReadLine() ?? "";
-        lineaNueva+=$"{campo}#";
-        Console.WriteLine("escribi el año de fabricacion del nuevo vehiculo");
-        campo = Console.ReadLine() ?? "";
-        lineaNueva+=$"{campo}#";
-        Console.WriteLine("escribi el ID del titular del nuevo vehiculo");
-        campo = Console.ReadLine() ?? "";
-        lineaNueva+=$"{campo}";
+        string lineaNueva = $"{vehiculo.ID}#{vehiculo.Dominio}#{vehiculo.Marca}#{vehiculo.AnioFabricacion}#{vehiculo.IDTitular}";
         lineas[lineaAModificar -1] =  lineaNueva;
         File.WriteAllLines(_nombreArch,lineas);
     }
@@ -65,6 +52,13 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
 
         if(!encontre) throw new Exception("no esta ese vehiculo");
 
+        lineas = ActualizarArray(lineas, lineaABorrar);
+
+        File.WriteAllLines(_nombreArch,lineas);
+    }
+
+    private String [] ActualizarArray(String [] lineas, int lineaABorrar) {
+        
         lineas[lineaABorrar -1] = "";
         string[] nuevaLinea = new String[lineas.Length -1];
         int j = 0;
@@ -76,11 +70,8 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
                 j++;
             }
         }
-
-        File.WriteAllLines(_nombreArch,nuevaLinea);
+        return nuevaLinea;
     }
-
-
 
     public List<Vehiculo> ListarVehiculos()
     {
@@ -98,17 +89,16 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
     {
         var vehiculo = new Vehiculo();
         string todosLosCampos = sr.ReadLine() ?? ""; // me viene la linea con toda la info separadas por # 
-        if (todosLosCampos != "")
-        {
-            string[] campos = todosLosCampos.Split('#');
-            vehiculo.ID = int.Parse(campos[0]);
-            vehiculo.Dominio = campos[1];
-            vehiculo.Marca = campos[2];
-            vehiculo.AnioFabricacion = int.Parse(campos[3]);
-            vehiculo.IDTitular = int.Parse(campos[4]);
-            return vehiculo;
-        }
-        else throw new Exception("no habia nada");
+        
+        if (todosLosCampos == "") throw new Exception("no habia nada");
+                 
+        string[] campos = todosLosCampos.Split('#');
+        vehiculo.ID = int.Parse(campos[0]);
+        vehiculo.Dominio = campos[1];
+        vehiculo.Marca = campos[2];
+        vehiculo.AnioFabricacion = int.Parse(campos[3]);
+        vehiculo.IDTitular = int.Parse(campos[4]);
+        return vehiculo;
     }
 
 }

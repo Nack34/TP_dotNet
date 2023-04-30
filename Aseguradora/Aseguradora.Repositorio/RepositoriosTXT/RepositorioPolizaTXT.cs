@@ -65,13 +65,13 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         if (!seEncontro) throw new Exception("No se encontro la poliza");
     }
 
-    public Poliza LeerPoliza(in StreamReader sr){ // ---------------------------------------- Como desacoplarlo? Seria mejor desacoplado?
+    private Poliza LeerPoliza(in StreamReader sr){
         var poliza = new Poliza();
         poliza.ID = int.Parse(sr.ReadLine() ?? "");
         poliza.VehiculoId = int.Parse(sr.ReadLine() ?? "");
         poliza.ValorAsegurado = double.Parse(sr.ReadLine() ?? "");
         poliza.Franquicia = sr.ReadLine() ?? "";
-        poliza.TipDeCobertura = sr.ReadLine() ?? "";
+        poliza.TipoDeCobertura = sr.ReadLine() ?? "";
         poliza.FechaDeInicioDeVigencia = DateTime.Parse(sr.ReadLine() ?? "");
         poliza.FechaDeFinDeVigencia = DateTime.Parse(sr.ReadLine() ?? "");
         return poliza;
