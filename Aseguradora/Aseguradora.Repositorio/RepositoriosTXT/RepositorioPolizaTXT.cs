@@ -10,7 +10,7 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         sw.WriteLine(poliza.VehiculoId);
         sw.WriteLine(poliza.ValorAsegurado);
         sw.WriteLine(poliza.Franquicia);
-        sw.WriteLine(poliza.TipDeCobertura);
+        sw.WriteLine(poliza.TipoDeCobertura);
         sw.WriteLine(poliza.FechaDeInicioDeVigencia);
         sw.WriteLine(poliza.FechaDeFinDeVigencia);
     }
