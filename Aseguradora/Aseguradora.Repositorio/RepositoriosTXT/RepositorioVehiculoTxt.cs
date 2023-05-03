@@ -145,23 +145,4 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
         return IDVehiculo-1;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

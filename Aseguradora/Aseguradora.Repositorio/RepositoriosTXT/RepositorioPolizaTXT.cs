@@ -5,21 +5,21 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
     readonly string _nombreArch = "polizas.txt";
     public void AgregarPoliza(Poliza poliza)
     {
-        // setear ID con los metodos mas abajo
+        // setea ID con los metodos mas abajo
         poliza.ID=getNuevoID; //ale:lee la base de datos (txt), y asigna id
 
+        if (YaExisite(poliza)) throw new Exception("Poliza ya existente, no se puede volver a agregar");
 
-
-        //ale: falta recorrer el txt para ver si no existe otro titular con el mismo dni
-
-        using var sw = new StreamWriter(_nombreArch, true);
-        sw.WriteLine(poliza.ID);
-        sw.WriteLine(poliza.VehiculoId);
-        sw.WriteLine(poliza.ValorAsegurado);
-        sw.WriteLine(poliza.Franquicia);
-        sw.WriteLine(poliza.TipoDeCobertura);
-        sw.WriteLine(poliza.FechaDeInicioDeVigencia);
-        sw.WriteLine(poliza.FechaDeFinDeVigencia);
+        EscribirPoliza(poliza);
+    }
+    public bool YaExisite(Poliza poliza){
+        using var sr = new StreamReader(_nombreArch);
+        while (!sr.EndOfStream)
+        {
+            Poliza p = LeerPoliza(in sr); // ------------------------------------------------------------ FUNCIONA???
+            if (p.ID == poliza.ID) return true;
+        }
+        return false;
     }
     public List<Poliza> ListarPolizas()
     {
@@ -45,7 +45,7 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         }
         File.Delete(_nombreArch); // borrar archivo
         foreach (var poliza in polizas){
-            AgregarPoliza(poliza);
+            EscribirPoliza(poliza);
         }
 
         if (!seEncontro) throw new Exception("No se encontro la poliza");
@@ -66,12 +66,11 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         }        
         File.Delete(_nombreArch); // borrar archivo
         foreach (var poliza in polizas){
-            AgregarPoliza(poliza);
+            EscribirPoliza(poliza);
         }
 
         if (!seEncontro) throw new Exception("No se encontro la poliza");
     }
-
     private Poliza LeerPoliza(in StreamReader sr){
         var poliza = new Poliza();
         poliza.ID = int.Parse(sr.ReadLine() ?? "");
@@ -83,16 +82,20 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         poliza.FechaDeFinDeVigencia = DateTime.Parse(sr.ReadLine() ?? "");
         return poliza;
     }
-
-
-
-
-
+    private void EscribirPoliza(Poliza poliza){
+        using var sw = new StreamWriter(_nombreArch, true);
+        sw.WriteLine(poliza.ID);
+        sw.WriteLine(poliza.VehiculoId);
+        sw.WriteLine(poliza.ValorAsegurado);
+        sw.WriteLine(poliza.Franquicia);
+        sw.WriteLine(poliza.TipoDeCobertura);
+        sw.WriteLine(poliza.FechaDeInicioDeVigencia);
+        sw.WriteLine(poliza.FechaDeFinDeVigencia);
+    }
 
 
 ////////////////////////////ASIGNAR ID A LA HORA DE INSTANCIAR/////////////////////////////////////////////////////////    
     private static string RutaArchivoID {get;set;} = "Aseguradora.Repositorio/ArchivosTXT/IDPoliza";
-    
     
     private static int getNuevoID //este te devuelve el id del Poliza siguiente
     {
@@ -118,20 +121,4 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         archivo.WriteLine((IDPoliza));//sobreescribo el id con id+1 en el archivo
         return IDPoliza-1;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
