@@ -9,19 +9,15 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
     {
          // setear ID con los metodos mas abajo
 
-
         vehiculo.ID=getNuevoID; //ale:lee la base de datos (txt), y asigna id
 
-
-
-        //ale: falta recorrer el txt para ver si no existe otro titular con el mismo dni
-
+        //ale: falta recorrer el txt para ver si no existe otro vehiculo con el mismo dominio (patente)
+        if (YaExiste(vehiculo)) throw new Exception("Vehiculo ya existente, no se puede volver a agregar");
 
         using var sw = new StreamWriter(_nombreArch, true);
         
         sw.WriteLine($"{vehiculo.ID}#{vehiculo.Dominio}#{vehiculo.Marca}#{vehiculo.AnioFabricacion}#{vehiculo.IDTitular}");
     }
-
 
     public void ModificarVehiculo(Vehiculo vehiculo)
     {
@@ -100,7 +96,7 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
         var vehiculo = new Vehiculo();
         string todosLosCampos = sr.ReadLine() ?? ""; // me viene la linea con toda la info separadas por # 
         
-        if (todosLosCampos == "") throw new Exception("no habia nada");
+        if (todosLosCampos == "") throw new Exception("literalmente hay una linea vacia (sin datos) en tu archivo de vehiculo");
                  
         string[] campos = todosLosCampos.Split('#');
         vehiculo.ID = int.Parse(campos[0]);
@@ -111,7 +107,16 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
         return vehiculo;
     }
 
-
+    private bool YaExiste(Vehiculo vehiculo){
+        bool encontre = false;
+        using var sr = new StreamReader(_nombreArch);
+        while (!sr.EndOfStream && !encontre)
+        {
+            Vehiculo p = LeerVehiculo(sr);
+            if (p.Dominio == vehiculo.Dominio) encontre = true;
+        }
+        return encontre;
+    }
 
 
 
