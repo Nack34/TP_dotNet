@@ -8,7 +8,10 @@ public class Titular : Persona{
 
 
     public Titular(){} 
-    public Titular(int dni, string apellido, string nombre) : base(dni,apellido,nombre){}
+    public Titular(int dni, string apellido, string nombre, string direccion, string email) : base(dni,apellido,nombre){
+        Direccion = direccion;
+        Email = email;
+    }
 
     //Invalidar ToString
     public override string ToString(){
