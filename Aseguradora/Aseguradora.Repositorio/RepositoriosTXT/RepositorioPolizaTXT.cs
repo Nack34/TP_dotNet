@@ -8,11 +8,11 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         // setea ID con los metodos mas abajo
         poliza.ID=getNuevoID; //ale:lee la base de datos (txt), y asigna id
 
-        if (YaExisite(poliza)) throw new Exception("Poliza ya existente, no se puede volver a agregar");
+        if (YaExiste(poliza)) throw new Exception("Poliza ya existente, no se puede volver a agregar");
 
         EscribirPoliza(poliza);
     }
-    public bool YaExisite(Poliza poliza){
+    public bool YaExiste(Poliza poliza){
         using var sr = new StreamReader(_nombreArch);
         while (!sr.EndOfStream)
         {

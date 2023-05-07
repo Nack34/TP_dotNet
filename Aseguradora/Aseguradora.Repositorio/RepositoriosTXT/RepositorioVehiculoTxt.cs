@@ -8,10 +8,8 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
     public void AgregarVehiculo(Vehiculo vehiculo)
     {
          // setear ID con los metodos mas abajo
+        vehiculo.ID=getNuevoID;
 
-        vehiculo.ID=getNuevoID; //ale:lee la base de datos (txt), y asigna id
-
-        //ale: falta recorrer el txt para ver si no existe otro vehiculo con el mismo dominio (patente)
         if (YaExiste(vehiculo)) throw new Exception("Vehiculo ya existente, no se puede volver a agregar");
 
         using var sw = new StreamWriter(_nombreArch, true);
