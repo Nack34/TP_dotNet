@@ -12,15 +12,26 @@ public class RepositorioTitularTXT : IRepositorioTitular{
 
         // setear ID con los metodos mas abajo
         titular.ID=getNuevoID; //ale:lee la base de datos (txt), y asigna id
+        if(YaExiste(titular))
+            throw new Exception("Titular ya existente, no se puede volver a agregar");
+        else
+           EscribirTitular(titular);
+    }
 
-
-        //ale: falta recorrer el txt para ver si no existe otro titular con el mismo dni
+    public bool YaExiste(Titular titular){
         using var leer= new StreamReader(_nombreArch);
+        var titularAux = new Titular();
         while(!leer.EndOfStream)
         {
-            //completar body
+            titularAux = LeerTitular(leer);
+            if(titularAux.DNI == titular.DNI)
+                return true;
         }
+        return false;
+    }
 
+    private void EscribirTitular(Titular titular)
+    {
         using var sw = new StreamWriter(_nombreArch,true);
         sw.WriteLine(titular.ID);
         sw.WriteLine(titular.DNI);
@@ -28,7 +39,7 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         sw.WriteLine(titular.Direccion);
         sw.WriteLine(titular.Telefono);
         sw.WriteLine(titular.Email);
-    }
+    } 
 
     public void ModificarTitular(Titular titularModificado){
         //Probar forma sin StreamReader, es decir usando los metodos de File
@@ -52,7 +63,7 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         if(!existe) throw new Exception("No existe un titular con este DNI");
     }
 
-    Titular LeerTitular(StreamReader sr){ 
+    private Titular LeerTitular(StreamReader sr){ 
         var titular = new Titular();
         titular.ID = int.Parse(sr.ReadLine() ?? "");
         titular.DNI = int.Parse(sr.ReadLine() ?? "");
