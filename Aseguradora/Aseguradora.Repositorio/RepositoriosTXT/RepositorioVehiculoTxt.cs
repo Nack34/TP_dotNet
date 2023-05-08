@@ -9,13 +9,13 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
     {
         string separador = Path.DirectorySeparatorChar.ToString();
         if (separador == @"\" ) {
-            _nombreArch = @"..\Repositorios\Vehiculos.txt";
-            RutaArchivoID = @"..\Repositorios\IDVehiculos.txt";
+            _nombreArch = @"..\Aseguradora.Repositorio\Vehiculos.txt";
+            RutaArchivoID = @"..\Aseguradora.Repositorio\IDVehiculos.txt";
         }
         else 
         {
-            _nombreArch = "../Repositorios/Vehiculos.txt";
-            RutaArchivoID = "../Repositorios/IDVehiculos.txt";
+            _nombreArch = "../Aseguradora.Repositorio/Vehiculos.txt";
+            RutaArchivoID = "../Aseguradora.Repositorio/IDVehiculos.txt";
         }
     }
 
@@ -51,7 +51,8 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
 
         if(!encontre) throw new Exception("Excepcion: no se puede modificar pues el vehiculo no existe");
 
-        string vehiculoNuevo = $"{vehiculo.ID}#{vehiculo.Dominio}#{vehiculo.Marca}#{vehiculo.AnioFabricacion}#{vehiculo.IDTitular}";
+        //el id tiene que ser el q esta leido del archivo (el del id del vehiculo que me viene como parametro puede ser que instancie uno nuevo entonces queda -1 el id pero sus otros valores son validos) 
+        string vehiculoNuevo = $"{vehiculoLeido.ID}#{vehiculo.Dominio}#{vehiculo.Marca}#{vehiculo.AnioFabricacion}#{vehiculo.IDTitular}";
         vehiculos[lineaAModificar -1] =  vehiculoNuevo;
         File.WriteAllLines(_nombreArch,vehiculos);
     }
