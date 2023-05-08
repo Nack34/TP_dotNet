@@ -1,8 +1,27 @@
 namespace Aseguradora.Repositorio;
 using Aseguradora.Aplicacion;
-
 public class RepositorioTitularTXT : IRepositorioTitular{
-    private readonly string _nombreArch = "titulares.txt";
+    private static string _nombreArch {get;}
+
+    static RepositorioTitularTXT()
+    {
+        string separador = Path.DirectorySeparatorChar.ToString();
+        if (separador == @"\" ) {
+            _nombreArch = @"..\Aseguradora.Repositorio\Titulares.txt";
+            RutaArchivoID = @"..\Aseguradora.Repositorio\IDTitulares.txt";
+        }
+        else 
+        {
+            _nombreArch = "../Aseguradora.Repositorio/Titulares.txt";
+            RutaArchivoID = "../Aseguradora.Repositorio/IDTitulares.txt";
+        }
+        
+        //el mismo problema de antes, pregunto siempre pero solo va a suceder la primera vez que se ejecute el algoritmo
+        if (!File.Exists(RutaArchivoID)) CrearArchivoIDTitular();
+        
+        //el mismo problema de antes, pregunto siempre pero solo va a suceder la primera vez que se ejecute el algoritmo
+        if (!File.Exists(_nombreArch)) CrearArchivoTitularTXT();
+    }
 
     public RepositorioTitularTXT()
     {
@@ -46,7 +65,7 @@ public class RepositorioTitularTXT : IRepositorioTitular{
     public void ModificarTitular(Titular titularModificado){
         //Probar forma sin StreamReader, es decir usando los metodos de File
         using var sr = new StreamReader(_nombreArch);
-        List<Titular> listaTitulares = new List<Titular>();
+        var listaTitulares = new List<Titular>();
         var titularAux = new Titular();
         bool existe = false;
         while(!sr.EndOfStream){
@@ -109,22 +128,19 @@ public class RepositorioTitularTXT : IRepositorioTitular{
 
 
 ////////////////////////////ASIGNAR ID A LA HORA DE INSTANCIAR/////////////////////////////////////////////////////////    
-    private static string RutaArchivoID {get;set;} = "Aseguradora.Repositorio/ArchivosTXT/IDTitular";
+    private static string RutaArchivoID {get;}
     
     
-    private static int getNuevoID //este te devuelve el id del titular siguiente
+    private static int getNuevoID => RetornarIDTitular();//este te devuelve el id del titular siguiente
+
+    private static void CrearArchivoTitularTXT() 
     {
-        get
-        {
-            return RetornarIDTitular();
-            
-        }
+        using var archivo = new StreamWriter(_nombreArch);
     }
     private static void CrearArchivoIDTitular() //se ejecuta cuando creamos el txt por primera vez
     {
-        StreamWriter archivo = new StreamWriter(RutaArchivoID);
+        using StreamWriter archivo = new StreamWriter(RutaArchivoID);
         archivo.WriteLine(1);//inicializa el id con 1;
-        archivo.Close();
     }
     
     private static int RetornarIDTitular()

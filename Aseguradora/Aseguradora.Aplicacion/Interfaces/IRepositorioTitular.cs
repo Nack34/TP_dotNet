@@ -9,7 +9,7 @@ public interface IRepositorioTitular{
     List<Titular> ListarTitulares();
 
     //todo con respecto al ID
-    static string RutaArchivoID {get;set;}="";
+    static string RutaArchivoID {get;}="";
     static void CrearArchivoIDTitular(){}
     static int getNuevoID{get;}
     
