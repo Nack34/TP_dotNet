@@ -11,7 +11,7 @@ public interface IRepositorioVehiculo
     List<Vehiculo> ListarVehiculos();
 
      //todo con respecto al ID
-    static string RutaArchivoID {get;set;}="";
+    static string RutaArchivoID {get;}="";
     static void CrearArchivoIDVehiculo(){}
     static int getNuevoID{get;}
 }

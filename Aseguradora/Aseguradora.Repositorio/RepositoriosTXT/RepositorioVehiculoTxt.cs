@@ -1,81 +1,86 @@
 ﻿namespace Aseguradora.Repositorios;
 using Aseguradora.Aplicacion;
-public class RepositorioVehiculoTxt : IRepositorioVehiculo  
+public class RepositorioVehiculoTXT : IRepositorioVehiculo  
 {
-    readonly string _nombreArch = "Vehiculos.txt";
+    private static string _nombreArch {get;}
 
-    
+    //cuando llamo al repositorio me entero si el Sistema operativo usa / o \ para moverse entre directorios y poder crear los archivos.
+    static RepositorioVehiculoTXT()
+    {
+        string separador = Path.DirectorySeparatorChar.ToString();
+        if (separador == @"\" ) {
+            _nombreArch = @"..\Repositorios\Vehiculos.txt";
+            RutaArchivoID = @"..\Repositorios\IDVehiculos.txt";
+        }
+        else 
+        {
+            _nombreArch = "../Repositorios/Vehiculos.txt";
+            RutaArchivoID = "../Repositorios/IDVehiculos.txt";
+        }
+    }
+
+
     public void AgregarVehiculo(Vehiculo vehiculo)
     {
-         // setear ID con los metodos mas abajo
-        vehiculo.ID=getNuevoID;
-
-        if (YaExiste(vehiculo)) throw new Exception("Vehiculo ya existente, no se puede volver a agregar");
-
+        if (YaExiste(vehiculo)) throw new Exception("Excepcion: Vehiculo ya existente, no se puede volver a agregar");
+        
         using var sw = new StreamWriter(_nombreArch, true);
         
+         // setear ID con los metodos mas abajo
+        vehiculo.ID=getNuevoID;
+        
+        //en toda una linea separada por  "#" se escriben los datos de un vehiculo
         sw.WriteLine($"{vehiculo.ID}#{vehiculo.Dominio}#{vehiculo.Marca}#{vehiculo.AnioFabricacion}#{vehiculo.IDTitular}");
     }
 
     public void ModificarVehiculo(Vehiculo vehiculo)
     {
         bool encontre = false;
-        string[] lineas = File.ReadAllLines(_nombreArch);
-        int lineaAModificar = 0;
-        using (var sr = new StreamReader(_nombreArch,true))
+        var vehiculoLeido = new Vehiculo();
+        string[] vehiculos = File.ReadAllLines(_nombreArch); //cada linea tiene un vehiculo
+        int lineaAModificar = 0; // == vehiculoAModificar
+        using (var sr = new StreamReader(_nombreArch))
         {
             while(!sr.EndOfStream && !encontre)
             {
                 lineaAModificar++;
-                var vehiculoLeido = LeerVehiculo(sr);
-                if (vehiculo.ID == vehiculoLeido.ID) encontre = true;
+                vehiculoLeido = LeerVehiculo(sr);
+                if (vehiculo.Dominio == vehiculoLeido.Dominio) encontre = true;
             }
         }
 
-        if(!encontre) throw new Exception("no esta ese vehiculo");
+        if(!encontre) throw new Exception("Excepcion: no se puede modificar pues el vehiculo no existe");
 
-        string lineaNueva = $"{vehiculo.ID}#{vehiculo.Dominio}#{vehiculo.Marca}#{vehiculo.AnioFabricacion}#{vehiculo.IDTitular}";
-        lineas[lineaAModificar -1] =  lineaNueva;
-        File.WriteAllLines(_nombreArch,lineas);
+        string vehiculoNuevo = $"{vehiculo.ID}#{vehiculo.Dominio}#{vehiculo.Marca}#{vehiculo.AnioFabricacion}#{vehiculo.IDTitular}";
+        vehiculos[lineaAModificar -1] =  vehiculoNuevo;
+        File.WriteAllLines(_nombreArch,vehiculos);
     }
 
     public void EliminarVehiculo(int id)
     {
         bool encontre = false;
-        string[] lineas = File.ReadAllLines(_nombreArch);
+        var vehiculoLeido = new Vehiculo();
+        string[] vehiculos = File.ReadAllLines(_nombreArch);
         int lineaABorrar = 0;
-        using (var sr = new StreamReader(_nombreArch,true))
+        using (var sr = new StreamReader(_nombreArch))
         {
             while(!sr.EndOfStream && !encontre)
             {
-                var vehiculoLeido = LeerVehiculo(sr);
                 lineaABorrar++;
+                vehiculoLeido = LeerVehiculo(sr);
                 if (id == vehiculoLeido.ID) encontre = true; 
             }
         }
 
-        if(!encontre) throw new Exception("no esta ese vehiculo");
+        if(!encontre) throw new Exception("Excepcion: no se puede eliminar pues el vehiculo no existe");
 
-        lineas = ActualizarArray(lineas, lineaABorrar);
+        //actualizarArray elimina del arreglo la posicion a eliminar
+        ActualizarArray(ref vehiculos, lineaABorrar);
 
-        File.WriteAllLines(_nombreArch,lineas);
+        File.WriteAllLines(_nombreArch,vehiculos);
     }
 
-    private String [] ActualizarArray(String [] lineas, int lineaABorrar) {
-        
-        lineas[lineaABorrar -1] = "";
-        string[] nuevaLinea = new String[lineas.Length -1];
-        int j = 0;
-        for (int i = 0; i < lineas.Length; i++)
-        {
-            if (lineas[i] != "") 
-            {
-                nuevaLinea[j] = lineas[i];
-                j++;
-            }
-        }
-        return nuevaLinea;
-    }
+
 
     public List<Vehiculo> ListarVehiculos()
     {
@@ -92,11 +97,14 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
     private Vehiculo LeerVehiculo(StreamReader sr) 
     {
         var vehiculo = new Vehiculo();
-        string todosLosCampos = sr.ReadLine() ?? ""; // me viene la linea con toda la info separadas por # 
-        
-        if (todosLosCampos == "") throw new Exception("literalmente hay una linea vacia (sin datos) en tu archivo de vehiculo");
-                 
+
+        // me viene la linea con toda la info separadas por # 
+        string todosLosCampos = sr.ReadLine() ?? ""; 
+
+        //cada campo es un dato del vehiculo
         string[] campos = todosLosCampos.Split('#');
+
+        //empiezo a darle valor a las propiedades del vehiculo
         vehiculo.ID = int.Parse(campos[0]);
         vehiculo.Dominio = campos[1];
         vehiculo.Marca = campos[2];
@@ -107,44 +115,67 @@ public class RepositorioVehiculoTxt : IRepositorioVehiculo
 
     private bool YaExiste(Vehiculo vehiculo){
         bool encontre = false;
-        using var sr = new StreamReader(_nombreArch);
-        while (!sr.EndOfStream && !encontre)
+
+        //esto en caso de que no exista el archivo lo crea, lo malo lo pregunto siempre, asi q habria que ver si conviene ya tener el ".txt" creado antes (sin valores).
+        if (!File.Exists(_nombreArch)) 
         {
-            Vehiculo p = LeerVehiculo(sr);
-            if (p.Dominio == vehiculo.Dominio) encontre = true;
+            var fs = File.Create(_nombreArch); //el File.Create crea un archivo (el del parametro) y retorna un objeto
+            fs.Close(); //hay q cerrarlo
         }
+
+        using (var sr = new StreamReader(_nombreArch))
+        {
+            while (!sr.EndOfStream && !encontre)
+            {
+                Vehiculo p = LeerVehiculo(sr);
+                if (p.Dominio == vehiculo.Dominio) encontre = true;
+            }
+        };
         return encontre;
     }
 
+    private void ActualizarArray(ref String [] vehiculos, int vehiculoAborrar) {
+        for (int i = vehiculoAborrar-1; i < vehiculos.Length-1;i++)
+        {
+            vehiculos[i] = vehiculos[i+1];
+        }
+        Array.Resize(ref vehiculos, vehiculos.Length - 1);
+    }
 
 
 
 ////////////////////////////ASIGNAR ID A LA HORA DE INSTANCIAR/////////////////////////////////////////////////////////    
-    private static string RutaArchivoID {get;set;} = "Aseguradora.Repositorio/ArchivosTXT/IDVehiculo";
+    private static string RutaArchivoID {get;}
     
     
-    private static int getNuevoID //este te devuelve el id del Vehiculo siguiente
+    //devuelve el id siguiente al que ya existe, ej: ultimo id creado es 4, en el archivo habra un 5.
+    //1era ejecucion: crea el archivo con el id "1", lo lee para asignarlo al vehiculo y despues aumenta en 1 el id en el archivo (sobreescribe)
+    private static int getNuevoID => RetornarIDVehiculo(); 
+
+
+    //se ejecuta cuando creamos el txt por primera vez
+    private static void CrearArchivoIDVehiculo() 
     {
-        get
+        using (var archivo = new StreamWriter(RutaArchivoID))
         {
-            return RetornarIDVehiculo();
-            
+            archivo.WriteLine(1);//inicializa el id con 1;
         }
-    }
-    private static void CrearArchivoIDVehiculo() //se ejecuta cuando creamos el txt por primera vez
-    {
-        StreamWriter archivo = new StreamWriter(RutaArchivoID);
-        archivo.WriteLine(1);//inicializa el id con 1;
-        archivo.Close();
     }
     
     private static int RetornarIDVehiculo()
     {
-        using var leer = new StreamReader(RutaArchivoID);
-        int IDVehiculo= int.Parse(leer.ReadLine() ?? "");; //tengo id actual
-        using var archivo = new StreamWriter(RutaArchivoID,false); 
-        IDVehiculo++;
-        archivo.WriteLine((IDVehiculo));//sobreescribo el id con id+1 en el archivo
+        //el mismo problema de antes, pregunto siempre pero solo va a suceder la primera vez que se ejecute el algoritmo
+        if (!File.Exists(RutaArchivoID)) CrearArchivoIDVehiculo();
+        //esto lo hago siempre
+        int IDVehiculo;
+        using (var sr = new StreamReader(RutaArchivoID))
+        {
+            IDVehiculo= int.Parse(sr.ReadLine() ?? "");; //tengo id actual
+        }
+        using (var sw = new StreamWriter(RutaArchivoID,false))
+        {
+            sw.WriteLine((++IDVehiculo));//sobreescribo el id con id+1 en el archivo
+        } 
         return IDVehiculo-1;
     }
 
