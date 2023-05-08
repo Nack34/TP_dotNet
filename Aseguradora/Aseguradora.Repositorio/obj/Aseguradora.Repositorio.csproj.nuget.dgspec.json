@@ -1,29 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\NICOLAS\\Desktop\\2023\\Primer Semestre\\DotNet\\Aseguradora\\Aseguradora.Repositorio\\Aseguradora.Repositorio.csproj": {}
+    "C:\\Users\\juani\\Desktop\\Informatica\\2° Informatica\\SeminarioDeLenguajes\\Trabajo .NET\\TP_dotNet\\Aseguradora\\Aseguradora.Repositorio\\Aseguradora.Repositorio.csproj": {}
   },
   "projects": {
-    "C:\\Users\\NICOLAS\\Desktop\\2023\\Primer Semestre\\DotNet\\Aseguradora\\Aseguradora.Repositorio\\Aseguradora.Repositorio.csproj": {
+    "C:\\Users\\juani\\Desktop\\Informatica\\2° Informatica\\SeminarioDeLenguajes\\Trabajo .NET\\TP_dotNet\\Aseguradora\\Aseguradora.Aplicacion\\Aseguradora.Aplicacion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\NICOLAS\\Desktop\\2023\\Primer Semestre\\DotNet\\Aseguradora\\Aseguradora.Repositorio\\Aseguradora.Repositorio.csproj",
-        "projectName": "Aseguradora.Repositorio",
-        "projectPath": "C:\\Users\\NICOLAS\\Desktop\\2023\\Primer Semestre\\DotNet\\Aseguradora\\Aseguradora.Repositorio\\Aseguradora.Repositorio.csproj",
-        "packagesPath": "C:\\Users\\NICOLAS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\NICOLAS\\Desktop\\2023\\Primer Semestre\\DotNet\\Aseguradora\\Aseguradora.Repositorio\\obj\\",
+        "projectUniqueName": "C:\\Users\\juani\\Desktop\\Informatica\\2° Informatica\\SeminarioDeLenguajes\\Trabajo .NET\\TP_dotNet\\Aseguradora\\Aseguradora.Aplicacion\\Aseguradora.Aplicacion.csproj",
+        "projectName": "Aseguradora.Aplicacion",
+        "projectPath": "C:\\Users\\juani\\Desktop\\Informatica\\2° Informatica\\SeminarioDeLenguajes\\Trabajo .NET\\TP_dotNet\\Aseguradora\\Aseguradora.Aplicacion\\Aseguradora.Aplicacion.csproj",
+        "packagesPath": "C:\\Users\\juani\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\juani\\Desktop\\Informatica\\2° Informatica\\SeminarioDeLenguajes\\Trabajo .NET\\TP_dotNet\\Aseguradora\\Aseguradora.Aplicacion\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\NICOLAS\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\juani\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
@@ -55,7 +50,61 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\juani\\Desktop\\Informatica\\2° Informatica\\SeminarioDeLenguajes\\Trabajo .NET\\TP_dotNet\\Aseguradora\\Aseguradora.Repositorio\\Aseguradora.Repositorio.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\juani\\Desktop\\Informatica\\2° Informatica\\SeminarioDeLenguajes\\Trabajo .NET\\TP_dotNet\\Aseguradora\\Aseguradora.Repositorio\\Aseguradora.Repositorio.csproj",
+        "projectName": "Aseguradora.Repositorio",
+        "projectPath": "C:\\Users\\juani\\Desktop\\Informatica\\2° Informatica\\SeminarioDeLenguajes\\Trabajo .NET\\TP_dotNet\\Aseguradora\\Aseguradora.Repositorio\\Aseguradora.Repositorio.csproj",
+        "packagesPath": "C:\\Users\\juani\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\juani\\Desktop\\Informatica\\2° Informatica\\SeminarioDeLenguajes\\Trabajo .NET\\TP_dotNet\\Aseguradora\\Aseguradora.Repositorio\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\juani\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\juani\\Desktop\\Informatica\\2° Informatica\\SeminarioDeLenguajes\\Trabajo .NET\\TP_dotNet\\Aseguradora\\Aseguradora.Aplicacion\\Aseguradora.Aplicacion.csproj": {
+                "projectPath": "C:\\Users\\juani\\Desktop\\Informatica\\2° Informatica\\SeminarioDeLenguajes\\Trabajo .NET\\TP_dotNet\\Aseguradora\\Aseguradora.Aplicacion\\Aseguradora.Aplicacion.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "Aseguradora.Consola/1.0.0": {
+        "dependencies": {
+          "Aseguradora.Aplicacion": "1.0.0",
+          "Aseguradora.Repositorio": "1.0.0"
+        },
+        "runtime": {
+          "Aseguradora.Consola.dll": {}
+        }
+      },
+      "Aseguradora.Aplicacion/1.0.0": {
+        "runtime": {
+          "Aseguradora.Aplicacion.dll": {}
+        }
+      },
+      "Aseguradora.Repositorio/1.0.0": {
+        "dependencies": {
+          "Aseguradora.Aplicacion": "1.0.0"
+        },
+        "runtime": {
+          "Aseguradora.Repositorio.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Aseguradora.Consola/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Aseguradora.Aplicacion/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Aseguradora.Repositorio/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

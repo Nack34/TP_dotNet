@@ -1,0 +1,15 @@
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\bin\Debug\net7.0\Aseguradora.Repositorio.deps.json
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\bin\Debug\net7.0\Aseguradora.Repositorio.dll
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\bin\Debug\net7.0\Aseguradora.Repositorio.pdb
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\bin\Debug\net7.0\Aseguradora.Aplicacion.dll
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\bin\Debug\net7.0\Aseguradora.Aplicacion.pdb
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\obj\Debug\net7.0\Aseguradora.Repositorio.csproj.AssemblyReference.cache
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\obj\Debug\net7.0\Aseguradora.Repositorio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\obj\Debug\net7.0\Aseguradora.Repositorio.AssemblyInfoInputs.cache
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\obj\Debug\net7.0\Aseguradora.Repositorio.AssemblyInfo.cs
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\obj\Debug\net7.0\Aseguradora.Repositorio.csproj.CoreCompileInputs.cache
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\obj\Debug\net7.0\Aseguradora.Repositorio.csproj.CopyComplete
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\obj\Debug\net7.0\Aseguradora.Repositorio.dll
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\obj\Debug\net7.0\refint\Aseguradora.Repositorio.dll
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\obj\Debug\net7.0\Aseguradora.Repositorio.pdb
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Repositorio\obj\Debug\net7.0\ref\Aseguradora.Repositorio.dll

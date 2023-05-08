@@ -1,0 +1,12 @@
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\bin\Debug\net7.0\Aseguradora.Aplicacion.deps.json
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\bin\Debug\net7.0\Aseguradora.Aplicacion.dll
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\bin\Debug\net7.0\Aseguradora.Aplicacion.pdb
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\obj\Debug\net7.0\Aseguradora.Aplicacion.csproj.AssemblyReference.cache
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\obj\Debug\net7.0\Aseguradora.Aplicacion.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\obj\Debug\net7.0\Aseguradora.Aplicacion.AssemblyInfoInputs.cache
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\obj\Debug\net7.0\Aseguradora.Aplicacion.AssemblyInfo.cs
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\obj\Debug\net7.0\Aseguradora.Aplicacion.csproj.CoreCompileInputs.cache
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\obj\Debug\net7.0\Aseguradora.Aplicacion.dll
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\obj\Debug\net7.0\refint\Aseguradora.Aplicacion.dll
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\obj\Debug\net7.0\Aseguradora.Aplicacion.pdb
+C:\Users\juani\Desktop\Informatica\2° Informatica\SeminarioDeLenguajes\Trabajo .NET\TP_dotNet\Aseguradora\Aseguradora.Aplicacion\obj\Debug\net7.0\ref\Aseguradora.Aplicacion.dll

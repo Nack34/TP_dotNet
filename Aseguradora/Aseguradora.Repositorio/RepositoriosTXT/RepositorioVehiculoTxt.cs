@@ -17,8 +17,13 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
             _nombreArch = "../Aseguradora.Repositorio/Vehiculos.txt";
             RutaArchivoID = "../Aseguradora.Repositorio/IDVehiculos.txt";
         }
+        
+        //el mismo problema de antes, pregunto siempre pero solo va a suceder la primera vez que se ejecute el algoritmo
+        if (!File.Exists(RutaArchivoID)) CrearArchivoIDVehiculo();
+        
+        //el mismo problema de antes, pregunto siempre pero solo va a suceder la primera vez que se ejecute el algoritmo
+        if (!File.Exists(_nombreArch)) CrearArchivoVehiculoTXT();
     }
-
 
     public void AgregarVehiculo(Vehiculo vehiculo)
     {
@@ -118,11 +123,11 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
         bool encontre = false;
 
         //esto en caso de que no exista el archivo lo crea, lo malo lo pregunto siempre, asi q habria que ver si conviene ya tener el ".txt" creado antes (sin valores).
-        if (!File.Exists(_nombreArch)) 
-        {
-            var fs = File.Create(_nombreArch); //el File.Create crea un archivo (el del parametro) y retorna un objeto
-            fs.Close(); //hay q cerrarlo
-        }
+        // if (!File.Exists(_nombreArch)) 
+        // {
+        //     var fs = File.Create(_nombreArch); //el File.Create crea un archivo (el del parametro) y retorna un objeto
+        //     fs.Close(); //hay q cerrarlo
+        // }
 
         using (var sr = new StreamReader(_nombreArch))
         {
@@ -163,10 +168,13 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
         }
     }
     
+    //se ejecuta cuando creamos el txt por primera vez
+    private static void CrearArchivoVehiculoTXT() 
+    {
+        using var archivo = new StreamWriter(_nombreArch);
+    }
     private static int RetornarIDVehiculo()
     {
-        //el mismo problema de antes, pregunto siempre pero solo va a suceder la primera vez que se ejecute el algoritmo
-        if (!File.Exists(RutaArchivoID)) CrearArchivoIDVehiculo();
         //esto lo hago siempre
         int IDVehiculo;
         using (var sr = new StreamReader(RutaArchivoID))

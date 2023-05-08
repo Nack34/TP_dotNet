@@ -60,7 +60,7 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         }
         File.Delete(_nombreArch);
         foreach(var titular in listaTitulares){
-            AgregarTitular(titular);
+           EscribirTitular(titular);
         }
         if(!existe) throw new Exception("No existe un titular con este DNI");
     }
@@ -92,7 +92,7 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         }
         File.Delete(_nombreArch);
         foreach(var titular in listaTitulares){
-            AgregarTitular(titular);
+            EscribirTitular(titular);
         }
         if(!existe) throw new Exception("No existe un titular con este ID");       
     }
