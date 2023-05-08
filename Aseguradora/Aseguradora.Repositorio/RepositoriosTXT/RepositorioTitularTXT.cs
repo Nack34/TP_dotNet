@@ -11,11 +11,13 @@ public class RepositorioTitularTXT : IRepositorioTitular{
     public void AgregarTitular(Titular titular){ //agregarTitular es PersistirTitular
 
         // setear ID con los metodos mas abajo
-        titular.ID=getNuevoID; //ale:lee la base de datos (txt), y asigna id
+         //ale:lee la base de datos (txt), y asigna id
         if(YaExiste(titular))
             throw new Exception("Titular ya existente, no se puede volver a agregar");
-        else
-           EscribirTitular(titular);
+        else{ 
+            titular.ID = getNuevoID;
+            EscribirTitular(titular);
+        }
     }
 
     public bool YaExiste(Titular titular){
@@ -127,11 +129,16 @@ public class RepositorioTitularTXT : IRepositorioTitular{
     
     private static int RetornarIDTitular()
     {
-        using var leer = new StreamReader(RutaArchivoID);
-        int IDtitular= int.Parse(leer.ReadLine() ?? "");; //tengo id actual
-        using var archivo = new StreamWriter(RutaArchivoID,false); 
-        IDtitular++;
-        archivo.WriteLine((IDtitular));//sobreescribo el id con id+1 en el archivo
+        int IDtitular;
+        using (var leer = new StreamReader(RutaArchivoID))
+        {
+            IDtitular= int.Parse(leer.ReadLine() ?? ""); //tengo id actual
+        }
+        using (var archivo = new StreamWriter(RutaArchivoID,false))
+        {
+            IDtitular++;
+            archivo.WriteLine((IDtitular));//sobreescribo el id con id+1 en el archivo
+        }
         return IDtitular-1;
     }
 
