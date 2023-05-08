@@ -2,19 +2,19 @@
 using Aseguradora.Aplicacion;
 public class RepositorioVehiculoTXT : IRepositorioVehiculo  
 {
-    private static string _nombreArch {get;}
+    private static string NombreArch {get;}
 
     //cuando llamo al repositorio me entero si el Sistema operativo usa / o \ para moverse entre directorios y poder crear los archivos.
     static RepositorioVehiculoTXT()
     {
         string separador = Path.DirectorySeparatorChar.ToString();
         if (separador == @"\" ) {
-            _nombreArch = @"..\Aseguradora.Repositorio\Vehiculos.txt";
+            NombreArch = @"..\Aseguradora.Repositorio\Vehiculos.txt";
             RutaArchivoID = @"..\Aseguradora.Repositorio\IDVehiculos.txt";
         }
         else 
         {
-            _nombreArch = "../Aseguradora.Repositorio/Vehiculos.txt";
+            NombreArch = "../Aseguradora.Repositorio/Vehiculos.txt";
             RutaArchivoID = "../Aseguradora.Repositorio/IDVehiculos.txt";
         }
         
@@ -22,14 +22,14 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
         if (!File.Exists(RutaArchivoID)) CrearArchivoIDVehiculo();
         
         //el mismo problema de antes, pregunto siempre pero solo va a suceder la primera vez que se ejecute el algoritmo
-        if (!File.Exists(_nombreArch)) CrearArchivoVehiculoTXT();
+        if (!File.Exists(NombreArch)) CrearArchivoVehiculoTXT();
     }
 
     public void AgregarVehiculo(Vehiculo vehiculo)
     {
         if (YaExiste(vehiculo)) throw new Exception("Excepcion: Vehiculo ya existente, no se puede volver a agregar");
         
-        using var sw = new StreamWriter(_nombreArch, true);
+        using var sw = new StreamWriter(NombreArch, true);
         
          // setear ID con los metodos mas abajo
         vehiculo.ID=getNuevoID;
@@ -42,9 +42,9 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
     {
         bool encontre = false;
         var vehiculoLeido = new Vehiculo();
-        string[] vehiculos = File.ReadAllLines(_nombreArch); //cada linea tiene un vehiculo
+        string[] vehiculos = File.ReadAllLines(NombreArch); //cada linea tiene un vehiculo
         int lineaAModificar = 0; // == vehiculoAModificar
-        using (var sr = new StreamReader(_nombreArch))
+        using (var sr = new StreamReader(NombreArch))
         {
             while(!sr.EndOfStream && !encontre)
             {
@@ -59,16 +59,16 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
         //el id tiene que ser el q esta leido del archivo (el del id del vehiculo que me viene como parametro puede ser que instancie uno nuevo entonces queda -1 el id pero sus otros valores son validos) 
         string vehiculoNuevo = $"{vehiculoLeido.ID}#{vehiculo.Dominio}#{vehiculo.Marca}#{vehiculo.AnioFabricacion}#{vehiculo.IDTitular}";
         vehiculos[lineaAModificar -1] =  vehiculoNuevo;
-        File.WriteAllLines(_nombreArch,vehiculos);
+        File.WriteAllLines(NombreArch,vehiculos);
     }
 
     public void EliminarVehiculo(int id)
     {
         bool encontre = false;
         var vehiculoLeido = new Vehiculo();
-        string[] vehiculos = File.ReadAllLines(_nombreArch);
+        string[] vehiculos = File.ReadAllLines(NombreArch);
         int lineaABorrar = 0;
-        using (var sr = new StreamReader(_nombreArch))
+        using (var sr = new StreamReader(NombreArch))
         {
             while(!sr.EndOfStream && !encontre)
             {
@@ -83,7 +83,7 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
         //actualizarArray elimina del arreglo la posicion a eliminar
         ActualizarArray(ref vehiculos, lineaABorrar);
 
-        File.WriteAllLines(_nombreArch,vehiculos);
+        File.WriteAllLines(NombreArch,vehiculos);
     }
 
 
@@ -91,7 +91,7 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
     public List<Vehiculo> ListarVehiculos()
     {
         var resultado = new List<Vehiculo>();
-        using var sr = new StreamReader(_nombreArch);
+        using var sr = new StreamReader(NombreArch);
         while (!sr.EndOfStream)
         {
             var Vehiculo = LeerVehiculo(sr);
@@ -123,13 +123,13 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
         bool encontre = false;
 
         //esto en caso de que no exista el archivo lo crea, lo malo lo pregunto siempre, asi q habria que ver si conviene ya tener el ".txt" creado antes (sin valores).
-        // if (!File.Exists(_nombreArch)) 
+        // if (!File.Exists(NombreArch)) 
         // {
-        //     var fs = File.Create(_nombreArch); //el File.Create crea un archivo (el del parametro) y retorna un objeto
+        //     var fs = File.Create(NombreArch); //el File.Create crea un archivo (el del parametro) y retorna un objeto
         //     fs.Close(); //hay q cerrarlo
         // }
 
-        using (var sr = new StreamReader(_nombreArch))
+        using (var sr = new StreamReader(NombreArch))
         {
             while (!sr.EndOfStream && !encontre)
             {
@@ -150,9 +150,9 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
 
 
 
-////////////////////////////ASIGNAR ID A LA HORA DE INSTANCIAR/////////////////////////////////////////////////////////    
+/////////////////////////////////////////////  ASIGNAR ID A LA HORA DE INSTANCIAR  //////////////////////////////////////////////////////  
+
     private static string RutaArchivoID {get;}
-    
     
     //devuelve el id siguiente al que ya existe, ej: ultimo id creado es 4, en el archivo habra un 5.
     //1era ejecucion: crea el archivo con el id "1", lo lee para asignarlo al vehiculo y despues aumenta en 1 el id en el archivo (sobreescribe)
@@ -171,7 +171,7 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
     //se ejecuta cuando creamos el txt por primera vez
     private static void CrearArchivoVehiculoTXT() 
     {
-        using var archivo = new StreamWriter(_nombreArch);
+        using var archivo = new StreamWriter(NombreArch);
     }
     private static int RetornarIDVehiculo()
     {
@@ -179,24 +179,7 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
         int IDVehiculo;
         using (var sr = new StreamReader(RutaArchivoID))
         {
-            IDVehiculo= int.Parse(sr.ReadLine() ?? "");;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            
-            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            
-            ;;;;;;;;;;;
-            ;         ;
-            ;         ;
-            ;         ;
-            ;         ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            ;         ;               ;         ;
-            ;         ;               ;;;;;;;;;;;
-            ;         ;               ;         ;
-            ;         ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            ;         ;
-            ;         ;
-            ;         ;
-            ;         ;
-            ;;;;;;;;;;;
+            IDVehiculo= int.Parse(sr.ReadLine() ?? "");
              //tengo id actual
         }
         using (var sw = new StreamWriter(RutaArchivoID,false))
@@ -207,3 +190,35 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
     }
 
 }
+/*
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWWWWWWWWWWWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNXXK00OOOOOOOOOO00KXXNWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWNK0OkxxxxxxxxxxxxxxxxxxxxkO0KNWWMMMMWMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNX0OkxdxxxxxxxxxxxxxxxxxxxxxxxxxxxO0XNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMWWNKkxxxxxxxxxxxxxxxxxxxxxxxxxxxxdxxxxxxxkKNWMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMWX0kxdxxxxxxxxxxxdxxddxxxxxxxxxxxxxxxxxxdxxxk0XWMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMNKkxxxxxxxxxxxxxxdddxxxxxxxxxxxxxxxxxxxxxxxxxxxk0NWMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMWXOxdxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxOXWWMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMWKkxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxkKWMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMWWXOdooollollllllllllloooooddddxxxxxxxxxxxxxxxxxxxxxxxxxxxKWMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMWMMMWKd;;:::::::::::;..;::;::::::::ccc:;:oxxxxxxxxxxxxxxxxxxxxxxkKWMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMW0kkko::lodddolclcccc::cccccccclclllllc::loolloddxxdxxxxxxxxxxxxxkXWMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMNx:clllccdOOOd::llllccllccccc;co::loooollloooo:,;cclddxxxxxxxxxxxxx0NMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMOcdkxxdccxOOk:;ldkkkxxxkxxxxxllOo;okkOOkxdddollc:::;:cldxdxxxxxxxxxkXMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMNdlxkkxlokOOOo;;codxkkxxxxxxxxockk:cxkkkkkxxkkkxdllc:::;cloxxxxxxxxxxKWMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMM0ccooodxOOkOkodkxddddooooodddxdcdOl;oxkkkkkxxxkkxxxdlc:::;:codxxxxxxxKWMMMMMMMMMMMMMMMMMM
+MMMMMMMMMWOc;ldkkOOOOOOdokkxdxkOOkxdddddddoodlcloooooooooooooolcoc,cll:,:lllooooxKKXNWWMMMMMMMMMMMMM
+MMMMMMMMMXl;:;:dOOOOOOOxokkolldkOOOOO000000OddOkxxxxkkkkxxxxxxo:ol,lxxxdooooollllloodxkkOOKNMMMMMMMM
+MMMMMMMMMKc,;;;oOOO00000xdkkOOOOOOOOOOOOOOOOxoxdccclxOkOOOOOOOkdlcokxoxOOOkkkkkkkkxxxxxdooldXMMMMMMM
+MMMMMMMMW0lokxkOOO0OkkkkkxdxxdkOOOOOOOOOOOOOxokkxxxkkOOOOOOOOOOOkkkOxoxOOOO0000000000OOOkllokWMMMMMM
+MMMMMMMMXdd0000Okdc;,'''',;coxddkOOOOOOOOOOOxokOOOOOOOOOOOOOOOOOOOOOxoxOOOkxolllllldkOOOkoddl0MMMMMM
+MMMMMMMM0clddddd:............:xxodxxxkkxxxxkdlxkkkxkkkkkkkkkkkkkOOOOdokOkl,.........,:dOOOOOxoKMMMMM
+MMMMMMMM0:,;;;;...........''..,xdcooooooooool:ldooooooooooodddddddxxookd,.............'lOOOOxo0MMMMM
+MMMMMMMMWk;',,'..''..;;;:..''..cdcclllllllllc:clllllllllllllllllllolcok;..'..':;:,..''.'coodol0MMMMM
+MMMMMMMMMWXxc,,,''..;c::l;..,..;llccccccccccccccccccccccllllllllllllloo'.''.':c;cc,.''..',,,,oXMMMMM
+MMMMMMMMMMMMWKKO;''.'::::'.'',lxxxxxxxxxxxxxxdddddddddddddddoooooooooolo:''..,:;:;..'';c:::cxXMMMMMM
+MMMMMMMMMMMMMMMNx,'',;'';,'',dNMMMMMMMMMMMMMMMMWWWWWWWWWWWWNNNNNNNNNXXNWKl''',;',;,'':OWNXNWMMMMMMMM
+MMMMMMMMMWWXXXKK0x:'.',,'.';d0KKKKKKKKKKXKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKOo;.',,''.'ckKKKKXNWMMMMMMM
+MMMMMMMMMWX0OkkxxxxdoooooodkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkxdooooooxkkkxkkOKWMMMMMMM
+*/
