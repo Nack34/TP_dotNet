@@ -179,7 +179,25 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
         int IDVehiculo;
         using (var sr = new StreamReader(RutaArchivoID))
         {
-            IDVehiculo= int.Parse(sr.ReadLine() ?? "");; //tengo id actual
+            IDVehiculo= int.Parse(sr.ReadLine() ?? "");;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            
+            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            
+            ;;;;;;;;;;;
+            ;         ;
+            ;         ;
+            ;         ;
+            ;         ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            ;         ;               ;         ;
+            ;         ;               ;;;;;;;;;;;
+            ;         ;               ;         ;
+            ;         ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            ;         ;
+            ;         ;
+            ;         ;
+            ;         ;
+            ;;;;;;;;;;;
+             //tengo id actual
         }
         using (var sw = new StreamWriter(RutaArchivoID,false))
         {
