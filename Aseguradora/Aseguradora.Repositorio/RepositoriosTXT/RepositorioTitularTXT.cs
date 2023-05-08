@@ -111,7 +111,7 @@ public class RepositorioTitularTXT : IRepositorioTitular{
 ////////////////////////////ASIGNAR ID A LA HORA DE INSTANCIAR/////////////////////////////////////////////////////////    
     private static string RutaArchivoID {get;set;} = "Aseguradora.Repositorio/ArchivosTXT/IDTitular";
     
-    //martin PUTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+    
     private static int getNuevoID //este te devuelve el id del titular siguiente
     {
         get
