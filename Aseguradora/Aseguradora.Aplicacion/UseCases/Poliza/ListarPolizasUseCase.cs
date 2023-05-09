@@ -7,8 +7,8 @@ public class ListarPolizasUseCase
     {
         this._repo = repo;
     }
-    public void Ejecutar()
+    public List<Poliza> Ejecutar()
     {
-        _repo.ListarPolizas();
+        return _repo.ListarPolizas();
     }
 }

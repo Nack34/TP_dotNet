@@ -9,19 +9,16 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
     {
         string separador = Path.DirectorySeparatorChar.ToString();
         if (separador == @"\" ) {
-            NombreArch = @"..\Aseguradora.Repositorio\Vehiculos.txt";
-            RutaArchivoID = @"..\Aseguradora.Repositorio\IDVehiculos.txt";
+            NombreArch = @"..\Aseguradora.Repositorio\ArchivosTXT\Vehiculos.txt";
+            RutaArchivoID = @"..\Aseguradora.Repositorio\ArchivosTXT\IDVehiculos.txt";
         }
         else 
         {
-            NombreArch = "../Aseguradora.Repositorio/Vehiculos.txt";
-            RutaArchivoID = "../Aseguradora.Repositorio/IDVehiculos.txt";
+            NombreArch = "../Aseguradora.Repositorio/ArchivosTXT/Vehiculos.txt";
+            RutaArchivoID = "../Aseguradora.Repositorio/ArchivosTXT/IDVehiculos.txt";
         }
         
-        //el mismo problema de antes, pregunto siempre pero solo va a suceder la primera vez que se ejecute el algoritmo
-        if (!File.Exists(RutaArchivoID)) CrearArchivoIDVehiculo();
-        
-        //el mismo problema de antes, pregunto siempre pero solo va a suceder la primera vez que se ejecute el algoritmo
+        if (!File.Exists(RutaArchivoID)) CrearArchivoIDVehiculo();   
         if (!File.Exists(NombreArch)) CrearArchivoVehiculoTXT();
     }
 
@@ -121,14 +118,6 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
 
     private bool YaExiste(Vehiculo vehiculo){
         bool encontre = false;
-
-        //esto en caso de que no exista el archivo lo crea, lo malo lo pregunto siempre, asi q habria que ver si conviene ya tener el ".txt" creado antes (sin valores).
-        // if (!File.Exists(NombreArch)) 
-        // {
-        //     var fs = File.Create(NombreArch); //el File.Create crea un archivo (el del parametro) y retorna un objeto
-        //     fs.Close(); //hay q cerrarlo
-        // }
-
         using (var sr = new StreamReader(NombreArch))
         {
             while (!sr.EndOfStream && !encontre)

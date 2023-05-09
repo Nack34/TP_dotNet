@@ -57,33 +57,43 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
     public void EliminarPoliza(int ID){
         bool seEncontro = false;
         var polizas = new List<Poliza>();
-        using var sr = new StreamReader(NombreArch);
-        while (!sr.EndOfStream)
-        {
-            Poliza poliza = LeerPoliza(in sr);
-            if (poliza.ID != ID) polizas.Add(poliza);
-            else seEncontro=true;
-        }
+        using (var sr = new StreamReader(NombreArch)){
+            while (!sr.EndOfStream)
+            {
+                Poliza poliza = LeerPoliza(in sr);
+                if (poliza.ID != ID) polizas.Add(poliza);
+                else seEncontro=true;
+            }
+        };
+
+        if (!seEncontro) throw new Exception("No se encontro la poliza, no se puede eliminar");
+        
         File.Delete(NombreArch); 
         foreach (var poliza in polizas){
             EscribirPoliza(poliza);
         }
-
-        if (!seEncontro) throw new Exception("No se encontro la poliza, no se puede eliminar");
     }
     public void ModificarPoliza(Poliza polizaModificada){
         bool seEncontro = false;
         var polizas = new List<Poliza>();
-        using var sr = new StreamReader(NombreArch);
-        while (!sr.EndOfStream)
+        using (var sr = new StreamReader(NombreArch))
         {
-            Poliza poliza = LeerPoliza(in sr);
-            if (poliza.ID != polizaModificada.ID) polizas.Add(poliza);
-            else {
-                seEncontro=true;
-                polizas.Add(polizaModificada);
-            }
-        }        
+            while (!sr.EndOfStream)
+            {
+                Poliza poliza = LeerPoliza(in sr);
+                if (poliza.ValorAsegurado != polizaModificada.ValorAsegurado ||
+                poliza.Franquicia != polizaModificada.Franquicia ||
+                poliza.TipoDeCobertura != polizaModificada.TipoDeCobertura ||
+                poliza.FechaDeInicioDeVigencia != polizaModificada.FechaDeInicioDeVigencia ||
+                poliza.FechaDeFinDeVigencia != polizaModificada.FechaDeFinDeVigencia) polizas.Add(poliza);
+                else {
+                    seEncontro=true;
+                    polizaModificada.ID = poliza.ID;
+                    polizas.Add(polizaModificada);
+                }
+            }   
+        };
+     
         File.Delete(NombreArch); 
         foreach (var poliza in polizas){
             EscribirPoliza(poliza);
