@@ -2,35 +2,29 @@ namespace Aseguradora.Repositorio;
 using Aseguradora.Aplicacion;
 public class RepositorioTitularTXT : IRepositorioTitular{
     private static string _nombreArch {get;}
-
     static RepositorioTitularTXT()
     {
         string separador = Path.DirectorySeparatorChar.ToString();
         if (separador == @"\" ) {
-            _nombreArch = @"..\Aseguradora.Repositorio\Titulares.txt";
-            RutaArchivoID = @"..\Aseguradora.Repositorio\IDTitulares.txt";
+            _nombreArch = @"..\Aseguradora.Repositorio\ArchivosTXT\Titulares.txt";
+            RutaArchivoID = @"..\Aseguradora.Repositorio\ArchivosTXT\IDTitulares.txt";
         }
         else 
         {
-            _nombreArch = "../Aseguradora.Repositorio/Titulares.txt";
-            RutaArchivoID = "../Aseguradora.Repositorio/IDTitulares.txt";
+            _nombreArch = "../Aseguradora.Repositorio/ArchivosTXT/Titulares.txt";
+            RutaArchivoID = "../Aseguradora.Repositorio/ArchivosTXT/IDTitulares.txt";
         }
         
-        //el mismo problema de antes, pregunto siempre pero solo va a suceder la primera vez que se ejecute el algoritmo
         if (!File.Exists(RutaArchivoID)) CrearArchivoIDTitular();
-        
-        //el mismo problema de antes, pregunto siempre pero solo va a suceder la primera vez que se ejecute el algoritmo
         if (!File.Exists(_nombreArch)) CrearArchivoTitularTXT();
     }
-
     public RepositorioTitularTXT()
     {
      CrearArchivoIDTitular();   
     }
-    public void AgregarTitular(Titular titular){ //agregarTitular es PersistirTitular
+    public void AgregarTitular(Titular titular){ 
 
         // setear ID con los metodos mas abajo
-         //ale:lee la base de datos (txt), y asigna id
         if(YaExiste(titular))
             throw new Exception("Titular ya existente, no se puede volver a agregar");
         else{ 
@@ -38,7 +32,6 @@ public class RepositorioTitularTXT : IRepositorioTitular{
             EscribirTitular(titular);
         }
     }
-
     public bool YaExiste(Titular titular){
         using var leer= new StreamReader(_nombreArch);
         var titularAux = new Titular();
@@ -50,7 +43,6 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         }
         return false;
     }
-
     private void EscribirTitular(Titular titular)
     {
         using var sw = new StreamWriter(_nombreArch,true);
@@ -61,9 +53,7 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         sw.WriteLine(titular.Telefono);
         sw.WriteLine(titular.Email);
     } 
-
     public void ModificarTitular(Titular titularModificado){
-        //Probar forma sin StreamReader, es decir usando los metodos de File
         using var sr = new StreamReader(_nombreArch);
         var listaTitulares = new List<Titular>();
         var titularAux = new Titular();
@@ -81,9 +71,8 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         foreach(var titular in listaTitulares){
            EscribirTitular(titular);
         }
-        if(!existe) throw new Exception("No existe un titular con este DNI");
+        if(!existe) throw new Exception("No existe un titular con este DNI, no se puede modificar");
     }
-
     private Titular LeerTitular(StreamReader sr){ 
         var titular = new Titular();
         titular.ID = int.Parse(sr.ReadLine() ?? "");
@@ -94,9 +83,7 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         titular.Email = sr.ReadLine() ?? "";
         return titular;
     }
-
     public void EliminarTitular(int id){
-        //Probar forma sin StreamReader, es decir usando los metodos de File
         using var sr = new StreamReader(_nombreArch);
         List<Titular> listaTitulares = new List<Titular>();
         var titularAux = new Titular();
@@ -113,9 +100,8 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         foreach(var titular in listaTitulares){
             EscribirTitular(titular);
         }
-        if(!existe) throw new Exception("No existe un titular con este ID");       
+        if(!existe) throw new Exception("No existe un titular con este ID, no se puede eliminar");       
     }
-
     public List<Titular> ListarTitulares(){
         using var sr = new StreamReader(_nombreArch);
         List<Titular> listaTitulares = new List<Titular>();
@@ -126,13 +112,9 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         return listaTitulares;
     }
 
-
-////////////////////////////ASIGNAR ID A LA HORA DE INSTANCIAR/////////////////////////////////////////////////////////    
+/////////////////////////////////////////////  ASIGNAR ID A LA HORA DE INSTANCIAR  //////////////////////////////////////////////////////    
     private static string RutaArchivoID {get;}
-    
-    
-    private static int getNuevoID => RetornarIDTitular();//este te devuelve el id del titular siguiente
-
+    private static int getNuevoID => RetornarIDTitular();
     private static void CrearArchivoTitularTXT() 
     {
         using var archivo = new StreamWriter(_nombreArch);
@@ -142,25 +124,18 @@ public class RepositorioTitularTXT : IRepositorioTitular{
         using StreamWriter archivo = new StreamWriter(RutaArchivoID);
         archivo.WriteLine(1);//inicializa el id con 1;
     }
-    
     private static int RetornarIDTitular()
     {
         int IDtitular;
         using (var leer = new StreamReader(RutaArchivoID))
         {
-            IDtitular= int.Parse(leer.ReadLine() ?? ""); //tengo id actual
+            IDtitular= int.Parse(leer.ReadLine() ?? ""); // obtengo id actual
         }
         using (var archivo = new StreamWriter(RutaArchivoID,false))
         {
             IDtitular++;
-            archivo.WriteLine((IDtitular));//sobreescribo el id con id+1 en el archivo
+            archivo.WriteLine((IDtitular)); // sobreescribo el id con id+1 en el archivo
         }
         return IDtitular-1;
     }
-
-
-
-
-
-
 }
